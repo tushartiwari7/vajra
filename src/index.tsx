@@ -24,6 +24,7 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import FlatCards from './components/FlatCard';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -33,6 +34,8 @@ function Section({children, title}: SectionProps): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <View style={styles.sectionContainer}>
+      <FlatCards />
+
       <Text
         style={[
           styles.sectionTitle,
