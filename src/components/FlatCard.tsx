@@ -2,13 +2,11 @@ import {
   Dimensions,
   FlatList,
   Image,
-  ScrollView,
   StyleSheet,
-  Text,
   View,
   useColorScheme,
 } from 'react-native';
-
+import Text from './atoms/Text';
 const FlatCard = () => {
   const isDarkMode = useColorScheme() === 'dark';
   const background = isDarkMode ? styles.bgDark : styles.bgWhite;
@@ -54,7 +52,7 @@ const FlatCards = () => {
             resizeMode: 'contain',
           }}
         />
-        <Text style={styles.heading}>Heading Text</Text>
+        <Text.Title>Heading Text</Text.Title>
         <Text style={styles.sub_heading}>Heading Text</Text>
         <Text style={styles.description}>Heading Text</Text>
       </View>
