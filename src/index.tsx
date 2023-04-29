@@ -24,6 +24,7 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import FlatCards from './components/FlatCard';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -31,6 +32,8 @@ type SectionProps = PropsWithChildren<{
 
 function Section({children, title}: SectionProps): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
+  console.log(isDarkMode);
+
   return (
     <View style={styles.sectionContainer}>
       <Text
@@ -57,7 +60,7 @@ function Section({children, title}: SectionProps): JSX.Element {
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
-
+  console.log(isDarkMode);
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
@@ -76,6 +79,7 @@ function App(): JSX.Element {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
+          <FlatCards />
           <Section title="Step One">
             Edit <Text style={styles.highlight}>App.tsx</Text> to change this
             screen and then come back to see your edits and see if it works.
@@ -89,7 +93,9 @@ function App(): JSX.Element {
           <Section title="Learn More">
             Read the docs to discover what to do next:
           </Section>
-          <LearnMoreLinks />
+          <ScrollView nestedScrollEnabled>
+            <LearnMoreLinks />
+          </ScrollView>
         </View>
       </ScrollView>
     </SafeAreaView>
