@@ -1,16 +1,25 @@
 import {StyleProp, StyleSheet, Text} from 'react-native';
-import React from 'react';
+import React, {ReactNode} from 'react';
 
 type TextProps = {
-  children: JSX.Element | string;
+  children: ReactNode;
   style?: StyleProp<Text> | any;
 };
 
-const MyText = ({children, style, ...props}: TextProps) => {
-  const classes = Array.isArray(style)
-    ? [styles.text, ...style]
-    : [styles.text, style];
+type textVariant = 'text' | 'title' | 'subTitle' | 'subText';
 
+const getClasses = (
+  propStyles: StyleProp<Text> | undefined,
+  variant: textVariant,
+) => {
+  const classes = Array.isArray(propStyles)
+    ? [styles[variant], ...propStyles]
+    : [styles[variant], propStyles];
+  return classes;
+};
+
+const MyText = ({children, style, ...props}: TextProps) => {
+  const classes = getClasses(style, 'text') as any;
   return (
     <Text style={classes} {...props}>
       {children}
@@ -34,7 +43,7 @@ const MyTitleText = ({children, ...props}: TextProps) => {
   );
 };
 
-const MySubTitleText = ({children, ...props}: any) => {
+const MySubTitleText = ({children, ...props}: TextProps) => {
   return (
     <MyText style={styles.subTitle} {...props}>
       {children}
@@ -52,18 +61,22 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins',
     fontSize: 14,
     fontWeight: '400',
+    lineHeight: 18,
   },
   subText: {
     fontSize: 12,
+    lineHeight: 16,
     fontWeight: '300',
     opacity: 0.8,
   },
   title: {
     fontSize: 24,
+    lineHeight: 30,
     fontWeight: '700',
   },
   subTitle: {
     fontSize: 20,
+    lineHeight: 24,
     fontWeight: '600',
   },
 });

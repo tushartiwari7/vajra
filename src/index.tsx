@@ -12,7 +12,6 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
-  Text,
   useColorScheme,
   View,
 } from 'react-native';
@@ -25,9 +24,9 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import FlatCards from './components/FlatCard';
-
+import Text from './components/atoms/Text';
 type SectionProps = PropsWithChildren<{
-  title: string;
+  title?: string;
 }>;
 
 function Section({children, title}: SectionProps): JSX.Element {
@@ -36,24 +35,18 @@ function Section({children, title}: SectionProps): JSX.Element {
 
   return (
     <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
+      <Text.Title
+        style={{
+          color: isDarkMode ? Colors.white : Colors.black,
+        }}>
         {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
+      </Text.Title>
+      <Text.Small
+        style={{
+          color: isDarkMode ? Colors.light : Colors.dark,
+        }}>
         {children}
-      </Text>
+      </Text.Small>
     </View>
   );
 }
@@ -93,9 +86,7 @@ function App(): JSX.Element {
           <Section title="Learn More">
             Read the docs to discover what to do next:
           </Section>
-          <ScrollView nestedScrollEnabled>
-            <LearnMoreLinks />
-          </ScrollView>
+          <Section></Section>
         </View>
       </ScrollView>
     </SafeAreaView>
