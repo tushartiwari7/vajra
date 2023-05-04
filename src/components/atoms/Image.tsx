@@ -1,48 +1,58 @@
 import React from 'react';
-import {Dimensions, Image as RNImage} from 'react-native';
-
+import {
+  ImageSourcePropType,
+  ImageStyle,
+  Image as RNImage,
+  StyleProp,
+  StyleSheet,
+  View,
+} from 'react-native';
 interface ImageCompType {
-  source: string;
-  desiredWidth?: number;
+  source: ImageSourcePropType;
+  height?: number | `${number}%`;
 }
 
-interface scaleHeight extends ImageCompType {}
+// interface scaleHeight extends ImageCompType {
+//   desiredWidth: number;
+// }
 
-const scaleHeight = ({
-  source,
-  desiredWidth = Dimensions.get('window').width,
-}: scaleHeight) => {
-  const imgSrc = require('../../assets/prodev.jpg');
-  const dims = RNImage.resolveAssetSource(imgSrc);
-  const {width, height} = dims;
-  console.log({width, height, dims});
+// const scaleHeight = ({source, desiredWidth}: scaleHeight) => {
+//   const dims = RNImage.resolveAssetSource(source);
+//   const {width, height, scale} = dims;
+//   console.log({width, height, dims});
 
-  const useHeight = (desiredWidth / width) * height;
+//   const useHeight = (desiredWidth / width) * height;
+//   console.log({useHeight, width, height});
+//   return {width: desiredWidth, height: useHeight, scale};
+// };
 
-  console.log({useHeight, width, height});
-
-  return {width: desiredWidth, height: useHeight};
-};
-
-const Image = ({source, desiredWidth}: ImageCompType) => {
-  const {width, height} = scaleHeight({
-    source,
-    desiredWidth,
-  });
+const Image = ({source, height = '100%', ...props}: ImageCompType) => {
+  const dims = RNImage.resolveAssetSource(source);
 
   return (
     <RNImage
+      {...props}
+      source={source}
+      resizeMethod="scale"
       resizeMode="contain"
-      source={{
-        uri: 'https://pbs.twimg.com/media/FRl58OZaIAAIpUN?format=jpg&name=small',
-      }}
-      style={{
-        height: Dimensions.get('window').height,
-        width: Dimensions.get('window').width,
-        resizeMode: 'contain',
-      }}
+      style={[
+        styles.image,
+        {
+          height,
+          aspectRatio: dims.width / dims.height,
+        },
+      ]}
     />
   );
 };
+
+const styles = StyleSheet.create({
+  image: {
+    width: '100%',
+    borderColor: 'blue',
+    borderWidth: 3,
+    flex: 1,
+  },
+});
 
 export default Image;
